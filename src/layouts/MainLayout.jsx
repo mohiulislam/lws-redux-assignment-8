@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../assets/images/logo.svg";
 import { search } from "../features/filter/filterSlice";
 function MainLayout({ children }) {
   const dispatch = useDispatch();
-
+  const location = useLocation();
   function handleSearch(e) {
     dispatch(search(e.target.value));
   }
@@ -14,17 +14,32 @@ function MainLayout({ children }) {
     <Fragment>
       <nav className="py-4 2xl:px-6">
         <div className="container flex items-center justify-between">
-          <img src={Logo} width="150px" className="object-contain" alt="Logo" />
+          <Link to={"/"}>
+            <img
+              src={Logo}
+              width="150px"
+              className="object-contain"
+              alt="Logo"
+            />
+          </Link>
 
           <ul className="hidden md:flex items-center space-x-6">
             <Link
               to={"/"}
-              className="font-semibold cursor-pointer"
+              className={`cursor-pointer ${
+                location.pathname === "/" ? "font-semibold" : ""
+              }`}
               id="lws-bookStore"
             >
               <li>Book Store</li>
             </Link>
-            <Link className="cursor-pointer" to={"/AddBook"} id="lws-addBook">
+            <Link
+              to={"/AddBook"}
+              className={`cursor-pointer ${
+                location.pathname === "/AddBook" ? "font-semibold" : ""
+              }`}
+              id="lws-addBook"
+            >
               <li>Add Book</li>
             </Link>
           </ul>

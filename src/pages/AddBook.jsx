@@ -1,14 +1,39 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useAddBookMutation } from "../features/api/apiSlice";
 import MainLayout from "../layouts/MainLayout";
 
 function AddBook() {
+  const navigate = useNavigate();
+
+  const [addBook, { isLoading, isSuccess, isError, error }] =
+    useAddBookMutation({
+      onfulfilled: (data) => {
+        console.log("Book added successfully:", data);
+      },
+    });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = {
+      name: event.target.elements["name"].value,
+      author: event.target.elements["author"].value,
+      thumbnail: event.target.elements["thumbnail"].value,
+      price: +event.target.elements["price"].value,
+      rating: +event.target.elements["rating"].value,
+      featured: event.target.elements["featured"].checked,
+    };
+    addBook(formData);
+    navigate("/");
+  };
+
   return (
     <MainLayout>
       <main className="py-6 2xl:px-6">
         <div className="container">
           <div className="p-8 overflow-hidden bg-white shadow-cardShadow rounded-md max-w-xl mx-auto">
             <h4 className="mb-8 text-xl font-bold text-center">Add New Book</h4>
-            <form className="book-form">
+            <form onSubmit={handleSubmit} className="book-form">
               <div className="space-y-2">
                 <label htmlFor="lws-bookName">Book Name</label>
                 <input
@@ -75,10 +100,18 @@ function AddBook() {
                   This is a featured book
                 </label>
               </div>
-              <button type="submit" className="submit" id="lws-submit">
+              <button
+                disabled={isLoading && true}
+                type="submit"
+                className="submit"
+                id="lws-submit"
+              >
                 Add Book
               </button>
             </form>
+            {1 ? (
+              <div className={"text-center text-red-500"}>{error}</div>
+            ) : null}
           </div>
         </div>
       </main>
