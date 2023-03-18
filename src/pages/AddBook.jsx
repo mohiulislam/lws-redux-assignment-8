@@ -19,8 +19,9 @@ function AddBook() {
       rating: +event.target.elements["rating"].value,
       featured: event.target.elements["featured"].checked,
     };
-    addBook(formData);
-    navigate("/");
+    addBook(formData).then(() => {
+      navigate("/");
+    });
   };
 
   return (
@@ -105,7 +106,7 @@ function AddBook() {
                 Add Book
               </button>
             </form>
-            {1 ? (
+            {isError ? (
               <div className={"text-center text-red-500"}>{error}</div>
             ) : null}
           </div>

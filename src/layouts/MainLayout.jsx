@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../assets/images/logo.svg";
