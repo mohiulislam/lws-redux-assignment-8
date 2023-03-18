@@ -7,11 +7,7 @@ function AddBook() {
   const navigate = useNavigate();
 
   const [addBook, { isLoading, isSuccess, isError, error }] =
-    useAddBookMutation({
-      onfulfilled: (data) => {
-        console.log("Book added successfully:", data);
-      },
-    });
+    useAddBookMutation();
 
   const handleSubmit = (event) => {
     event.preventDefault();

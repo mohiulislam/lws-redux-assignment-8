@@ -1,6 +1,7 @@
 import React from "react";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { useDeleteBookMutation } from "../features/api/apiSlice";
 function Book({
   book: { featured, name, author, price, thumbnail, rating, id },
 }) {
@@ -9,6 +10,12 @@ function Book({
     stars.push(<AiFillStar key={i} className=" text-[#ffe75f]" />);
   }
   const navigate = useNavigate();
+  const [deleteBook, { isLoading, isSuccess, isError, error }] =
+    useDeleteBookMutation();
+
+  function handleDelete() {
+    deleteBook(id);
+  }
   return (
     <div className="book-card">
       <img
@@ -38,7 +45,7 @@ function Book({
                 />
               </svg>
             </button>
-            <button className="lws-deleteBook">
+            <button onClick={handleDelete} className="lws-deleteBook">
               <svg
                 fill="none"
                 viewBox="0 0 24 24"

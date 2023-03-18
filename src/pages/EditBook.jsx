@@ -1,7 +1,10 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 
 function EditBook() {
+  const { id } = useParams();
+  
   return (
     <MainLayout>
       <main className="py-6 2xl:px-6">
