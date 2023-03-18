@@ -1,10 +1,14 @@
 import React from "react";
 import { AiFillStar } from "react-icons/ai";
-function Book({ book: { featured, name, author, price, thumbnail, rating } }) {
+import { useNavigate } from "react-router-dom";
+function Book({
+  book: { featured, name, author, price, thumbnail, rating, id },
+}) {
   const stars = [];
   for (let i = 0; i < rating; i++) {
     stars.push(<AiFillStar key={i} className=" text-[#ffe75f]" />);
   }
+  const navigate = useNavigate();
   return (
     <div className="book-card">
       <img
@@ -16,7 +20,10 @@ function Book({ book: { featured, name, author, price, thumbnail, rating } }) {
         <div className="flex items-center justify-between">
           {featured ? <span className="lws-badge">featured</span> : null}
           <div className="text-gray-500 space-x-2">
-            <button className="lws-edit">
+            <button
+              onClick={() => navigate(`/EditBook/${id}`)}
+              className="lws-edit"
+            >
               <svg
                 fill="none"
                 viewBox="0 0 24 24"
